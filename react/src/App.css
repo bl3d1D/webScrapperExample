@@ -1,0 +1,125 @@
+.header{
+    z-index: 2;
+    min-height: 50px;
+    width: 100%;
+    position: fixed;
+    background: #f2f2f2; /* fallback for old browsers */
+}
+
+.header > .navbar-nav{
+    position: relative;
+    left: 75%;
+}
+
+a > button{
+    margin : 5px;
+}
+html{
+    height: 100%;
+}
+body {
+    min-height: 100vh;
+}
+
+#root{
+    min-height: 1000px;
+}
+#root > div{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    min-width: 100%;
+    min-height: 1000px;
+    background: #f2f2f2;
+}
+
+.landing-page{
+  background: #f2f2f2;
+  position: absolute;
+  top: 20%;
+  left : 0;
+  min-width: 100%;
+  min-height: 1000px;
+}
+
+.category-container{
+    text-align: center;
+    margin: auto;
+    max-width: 1350px;
+}
+
+.category{
+    display: inline-block;
+    min-height: 100px;
+    border-width: 5px;
+    border-radius: 15px!important;
+    text-align: center;
+    width : 30%!important;
+    margin : 5px!important;
+}
+
+.category > div > span{
+    position: relative;
+    top: 37%;
+    font-size: 15px;
+    color : #fff;
+    font-weight: 500;
+}
+
+#details{
+    border: 1px solid #9C9C9C;
+    background-color: #fff;
+    border-radius: 20px;
+    margin-top: 50px;
+    padding : 20px;
+}
+
+#login .container #login-row #login-column #login-box {
+    max-width: 600px;
+    min-height: 230px;
+    border: 3px solid #9C9C9C;
+    background-color: #fff;
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 34px;
+}
+
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}
+
+#register .container #register-row #register-column #register-box {
+    max-width: 600px;
+    min-height: 380px;
+    border: 3px solid #9C9C9C;
+    background-color: #fff;
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#register .container #register-row #register-column #register-box #register-form {
+  padding: 34px;
+}
+
+#register .container #register-row #register-column #register-box #register-form #register-link {
+  margin-top: -85px;
+}
+
+#message{
+    position: fixed;
+    width: 450px;
+    top: 20%;
+    right: 0%;
+    font-size: 15px;
+    background: #f44336;
+}
+
+.saveButton{
+    background-color: #4caf50!important;
+    margin-top: 10px!important;
+}
