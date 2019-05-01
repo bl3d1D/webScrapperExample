@@ -5,10 +5,13 @@
  */
 package com.example.Start.Entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,11 +27,20 @@ public class UserPosts {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+    
+    @ManyToOne
+    @JoinColumn
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn
+    private SubCategory subcategory;
 
     private String username;
 
     private String title;
-
+    
+    @Column(columnDefinition = "TEXT")
     private String description;
     
     private int aproved;
@@ -83,6 +95,22 @@ public class UserPosts {
 
     public void setAproved(int aproved) {
         this.aproved = aproved;
+    }
+    
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public SubCategory getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(SubCategory subcategory) {
+        this.subcategory = subcategory;
     }
     
 }

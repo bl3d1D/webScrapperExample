@@ -12,11 +12,11 @@ class App extends Component {
         this.props.IsLoggedIn();
     }
 
-
     render() {
+        console.log(this.props);
         return (
             <div>
-                <MyAppBar />
+                <MyAppBar logged={this.props.logged}/>
                 <div className="landing-page" style={{width: '100%', margin : 'auto'}}>
                     <div className="category-container">
                         <Main />
@@ -27,4 +27,8 @@ class App extends Component {
     }
 }
 
-export default withRouter(connect(null, {IsLoggedIn})(App));
+const mapStateToProps = state => ({
+    logged : state.Userdata.authenticated,
+});
+
+export default withRouter(connect(mapStateToProps, {IsLoggedIn})(App));

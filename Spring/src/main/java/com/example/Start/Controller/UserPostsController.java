@@ -1,9 +1,13 @@
 package com.example.Start.Controller;
 
 
+import com.example.Start.Entities.Category;
+import com.example.Start.Entities.SubCategory;
 import com.example.Start.Entities.SubNotification;
 import com.example.Start.Entities.UserPosts;
+import com.example.Start.Repositories.CategoryRepository;
 import com.example.Start.Repositories.SubNotificationRepository;
+import com.example.Start.Repositories.SubcategoryRepository;
 import com.example.Start.Repositories.UserPostsRepository;
 import com.example.Start.Security.UserPrincipal;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,8 +29,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class UserPostsController {
     
     @Autowired
-    private SubNotificationRepository subNotificationRepository;
+    private SubcategoryRepository SubCategoryRepository;
     
+    @Autowired
+    private CategoryRepository categoryRepository;
+    
+    @Autowired 
     private UserPostsRepository repository;
 
     public UserPostsController(UserPostsRepository repository) {
@@ -47,13 +55,22 @@ public class UserPostsController {
         
         ObjectMapper mapper = new ObjectMapper();
         Map<String,Object> map = mapper.readValue(json, Map.class);
-        String notification_id = (String) map.get("notification_id");
-        String details = (String) map.get("details");
-        Long Lid = Long.parseLong(notification_id,10);
-        Optional<SubNotification> n = subNotificationRepository.findById(Lid);
-        SubNotification sb = n.get();
+        int category_id = (int) map.get("category");
+        int subcategory_id = (int) map.get("subcategory");
+        String title = (String) map.get("title");
+        String details = (String) map.get("postdetails");
+        
+        Long categoryid = Long.valueOf(category_id);
+        Long subcategoryid = Long.valueOf(subcategory_id);
+        Optional<SubCategory> sc = SubCategoryRepository.findById(subcategoryid);
+        SubCategory SC = sc.get();
+        Optional<Category> c = categoryRepository.findById(categoryid);
+        Category C = c.get();
         UserPrincipal up =  (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserPosts un = new UserPosts(up.getUsername(),sb.getTitle(),details);
+        UserPosts un = new UserPosts(up.getUsername(),title,details);
+        un.setCategory(C);
+        un.setSubcategory(SC);
+        repository.save(un);
         repository.save(un);
         return new ResponseEntity<>("Notification saved successfuly!", HttpStatus.OK);
         
@@ -65,13 +82,21 @@ public class UserPostsController {
         
         ObjectMapper mapper = new ObjectMapper();
         Map<String,Object> map = mapper.readValue(json, Map.class);
-        String notification_id = (String) map.get("notification_id");
-        String details = (String) map.get("details");
-        Long Lid = Long.parseLong(notification_id,10);
-        Optional<SubNotification> n = subNotificationRepository.findById(Lid);
-        SubNotification sb = n.get();
+        int category_id = (int) map.get("category");
+        int subcategory_id = (int) map.get("subcategory");
+        String title = (String) map.get("title");
+        String details = (String) map.get("postdetails");
+        
+        Long categoryid = Long.valueOf(category_id);
+        Long subcategoryid = Long.valueOf(subcategory_id);
+        Optional<SubCategory> sc = SubCategoryRepository.findById(subcategoryid);
+        SubCategory SC = sc.get();
+        Optional<Category> c = categoryRepository.findById(categoryid);
+        Category C = c.get();
         UserPrincipal up =  (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserPosts un = new UserPosts(up.getUsername(),sb.getTitle(),details);
+        UserPosts un = new UserPosts(up.getUsername(),title,details);
+        un.setCategory(C);
+        un.setSubcategory(SC);
         repository.save(un);
         return new ResponseEntity<>("Notification updated successfuly!", HttpStatus.OK);
         

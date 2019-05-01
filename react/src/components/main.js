@@ -12,6 +12,7 @@ import Notifications from './NotificationsComponents/Notifications';
 import SubDetails from './NotificationsComponents/SubDetails';
 import Details from './NotificationsComponents/Details';
 import Login from './AuthComponents/LoginComponent';
+import Logout from './AuthComponents/LogoutComponent';
 import Register from './AuthComponents/RegisterComponent';
 
 
@@ -26,6 +27,7 @@ const Main = () => (
     <Route path="/details/:id" component={Details} />
     <Route path="/subdetails/:id" component={SubDetails} />
     <Route path="/login" component={Login} />
+    <Route path="/login" component={Logout} />
     <Route path="/register" component={Register} />
     <Route path="/myprofile" component={Profile} />
   </Switch>

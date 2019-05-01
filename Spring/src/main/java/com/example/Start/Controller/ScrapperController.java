@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/scrawler")
-public class ScrawlerController {
+@RequestMapping("/api/scrapper")
+public class ScrapperController {
 
     private ArrayList<Category> Categories;
     private ArrayList<CategoryWithSubcategory> CatWithSub;

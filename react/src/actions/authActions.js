@@ -149,3 +149,43 @@ export function IsLoggedIn(){
 
     
 }
+
+export function Logout(){
+
+
+    return dispatch => {
+        return axios.post('localhost:8090/logout')
+            .then((response) => {
+                console.log(response);
+                localStorage.removeItem('token');
+            })
+            .catch((error) => {
+
+                var errors = JSON.parse(error.request.response).errors;
+                console.log(errors);
+                var message = "";
+                errors.forEach(function(error){
+                    message += error.field.toUpperCase() +": "+ error.defaultMessage + "\n";
+                });
+                console.log(message);
+                dispatch({
+                    type: REGISTER,
+                    success : false,
+                    message : message,
+                    error : true,
+                })
+                setTimeout(() =>{
+                    dispatch({
+                        type: REGISTER,
+                        success : false,
+                        message : '',
+                        error : false,
+                    })
+                },4000)
+
+            })
+
+    }
+
+    
+}

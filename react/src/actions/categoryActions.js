@@ -31,6 +31,13 @@ export const getCategories = () => {
 export const getSubCategories = (id) => {
 
     return dispatch => {
+        if(id > 2){
+            return dispatch({
+                    type: GET_SUBCATEGORIES,
+                    payload: [],
+                    loading : false,
+                });
+        }
         return axios({
             method:'get',
             url:API_URL+'scrawler/categories/'+id
