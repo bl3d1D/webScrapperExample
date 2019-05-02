@@ -1,4 +1,4 @@
-import {GET_CATEGORIES, DELETE_NOTIFICATION, GET_NOTIFICATION, CHECK, SAVE_NOTIFICATION, GET_POSTS} from '../actions/types';
+import {GET_CATEGORIES, DELETE_NOTIFICATION, GET_NOTIFICATION, CHECK, SAVE_NOTIFICATION, GET_POSTS, DELETE_POST, ADD_POST} from '../actions/types';
 
 const initialState = {
     username: '',
@@ -43,6 +43,18 @@ export default function(state = initialState, action){
                 ...state,
                 postedNotifications: action.postedNotifications,
                 postsLoading: action.postsLoading
+            }
+        case DELETE_POST :
+            return {
+                ...state,
+                postedNotifications: action.postedNotifications
+            }
+        case ADD_POST :
+            return {
+                ...state,
+                message : action.message,
+                error: action.error,
+                success: action.success,
             }
         default :
             return state

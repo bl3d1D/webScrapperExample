@@ -11,6 +11,7 @@ export const DELETE_NOTIFICATION = 'DELETE_NOTIFICATION';
 export const GET_POSTS = 'GET_POSTS';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
+export const ADD_POST = 'ADD_POST';
 export const CREATE_CATEGORY = 'CREATE_CATEGORY';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';

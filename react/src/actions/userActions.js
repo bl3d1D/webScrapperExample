@@ -1,6 +1,6 @@
 import { API_URL } from '../global';
 import axios from 'axios';
-import { SAVE_NOTIFICATION, CREATE_NOTIFICATION, DELETE_NOTIFICATION, GET_NOTIFICATION, GET_POSTS } from '../actions/types';
+import { SAVE_NOTIFICATION, CREATE_NOTIFICATION, DELETE_NOTIFICATION, GET_NOTIFICATION, GET_POSTS ,DELETE_POST, ADD_POST} from '../actions/types';
 
 var headers = {
     'Content-Type': 'application/json',
@@ -126,19 +126,19 @@ export const savePost = (data) => {
             method:'post',
             data,
             headers: headers,
-            url: API_URL+'user_notification/save'
+            url: API_URL+'userposts/save'
         })
         .then(response => {
             console.log(response);
             dispatch({
-                type: SAVE_NOTIFICATION,
+                type: ADD_POST,
                 error: false,
                 message: response.data,
                 success: true
             });
             setTimeout(() => {
                 dispatch({
-                    type: SAVE_NOTIFICATION,
+                    type: ADD_POST,
                     success: false,
                     message: '',
                     error: false
@@ -154,7 +154,7 @@ export const savePost = (data) => {
                 }
                 if(error.response.status == 500){
                     dispatch({
-                        type: SAVE_NOTIFICATION,
+                        type: ADD_POST,
                         error: true,
                         message: "Internal error! Please refresh the page!",
                         success: false
@@ -204,12 +204,12 @@ export const deletePosts = (id) => {
         return axios({
             method:'post',
             headers: headers,
-            url: API_URL+'user_notification/delete/'+id
+            url: API_URL+'userposts/delete/'+id
         })
         .then(response => {
             dispatch({
-                type: DELETE_NOTIFICATION,
-                savedNotifications: response.data,
+                type: DELETE_POST,
+                postedNotifications: response.data,
 
             });
         })

@@ -55,13 +55,13 @@ public class UserPostsController {
         
         ObjectMapper mapper = new ObjectMapper();
         Map<String,Object> map = mapper.readValue(json, Map.class);
-        int category_id = (int) map.get("category");
-        int subcategory_id = (int) map.get("subcategory");
+        String category_id = (String) map.get("category");
+        String subcategory_id = (String) map.get("subcategory");
         String title = (String) map.get("title");
         String details = (String) map.get("postdetails");
         
-        Long categoryid = Long.valueOf(category_id);
-        Long subcategoryid = Long.valueOf(subcategory_id);
+        Long categoryid = Long.parseLong(category_id);
+        Long subcategoryid = Long.parseLong(subcategory_id);
         Optional<SubCategory> sc = SubCategoryRepository.findById(subcategoryid);
         SubCategory SC = sc.get();
         Optional<Category> c = categoryRepository.findById(categoryid);

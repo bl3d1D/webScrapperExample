@@ -12,7 +12,7 @@ import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { getPosts, deletePost, savePost  } from '../../actions/userActions';
+import { getPosts, deletePosts, savePost  } from '../../actions/userActions';
 import { ClipLoader } from 'react-spinners';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -69,18 +69,6 @@ const styles = theme => ({
       },
 });
 
-let id = 0;
-function createData(id, title, editIcon, deleteIcon) {
-  id += 1;
-  return {id, title, editIcon, deleteIcon};
-}
-
-
-const rows = [
-  createData(1, 'Frozen yoghurt',<Fab color="secondary" style={editButtonStyle}><Icon>edit_icon</Icon></Fab> ,<DeleteIcon />),
-  createData(1, 'Frozen yoghurt',<Fab color="secondary" style={editButtonStyle}><Icon>edit_icon</Icon></Fab>, <DeleteIcon />),
-];
-
 class MyPosts extends Component{
 
     constructor(props){
@@ -107,6 +95,10 @@ class MyPosts extends Component{
 
     onChange(event){
         this.setState({ [event.target.name]: event.target.value });
+    }
+
+    deletePost(id){
+      this.props.deletePosts(id);
     }
 
     openAddPost(){
@@ -239,18 +231,31 @@ class MyPosts extends Component{
                         <CustomTableCell>Title</CustomTableCell>
                         <CustomTableCell align="right">Edit</CustomTableCell>
                         <CustomTableCell align="right">Delete</CustomTableCell>
+                        <CustomTableCell align="right">Approved</CustomTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.map(row => (
-                        <TableRow className={classes.row} key={row.id}>
-                          <CustomTableCell component="th" scope="row">
-                            {row.title}
-                          </CustomTableCell>
-                          <CustomTableCell className={classes.icon} align="right">{row.editIcon}</CustomTableCell>
-                          <CustomTableCell align="right">{row.deleteIcon}</CustomTableCell>
-                        </TableRow>
-                      ))}
+                      {this.props.Posts.map(row => {
+                        if(row.aproved == 0){
+                            return <TableRow className={classes.title} key={row.id}>
+                                      <CustomTableCell component="th" scope="row" onClick={e => this.openModal(e, row)}>
+                                        {row.title}
+                                      </CustomTableCell>
+                                      <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><Icon>edit_icon</Icon></Fab></CustomTableCell>
+                                      <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><DeleteIcon onClick={() => this.deletePost(row.id)}/></Fab></CustomTableCell>
+                                      <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><Icon>clear</Icon></Fab></CustomTableCell>
+                                    </TableRow>
+                        }else{
+                            return <TableRow className={classes.title} key={row.id}>
+                                      <CustomTableCell component="th" scope="row" onClick={e => this.openModal(e, row)}>
+                                        {row.title}
+                                      </CustomTableCell>
+                                      <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><Icon>edit_icon</Icon></Fab></CustomTableCell>
+                                      <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><DeleteIcon onClick={() => this.deletePost(row.id)}/></Fab></CustomTableCell>
+                                      <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><Icon>check_outlined</Icon></Fab></CustomTableCell>
+                                    </TableRow>
+                        }
+                      })}
                     </TableBody>
                     <ClipLoader
                       sizeUnit={"px"}
@@ -277,4 +282,4 @@ MyPosts.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, {getPosts, getCategories, getSubCategories,savePost} )(withStyles(styles)(MyPosts));
+export default connect(mapStateToProps, {getPosts, getCategories, getSubCategories,savePost, deletePosts} )(withStyles(styles)(MyPosts));

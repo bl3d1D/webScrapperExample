@@ -1,4 +1,4 @@
-import {GET_CATEGORIES, CREATE_CATEGORY, GET_SUBCATEGORIES, GET_NOTIFICATION, GET_NOTIFICATIONSUB, GET_DETAILSSUB, GET_DETAILS} from '../actions/types';
+import {GET_CATEGORIES, CREATE_CATEGORY, GET_SUBCATEGORIES, GET_NOTIFICATION, GET_NOTIFICATIONSUB, GET_DETAILSSUB, GET_DETAILS, ADD_POST} from '../actions/types';
 import {API_URL } from '../global';
 import axios from 'axios';
 
@@ -7,7 +7,7 @@ export const getCategories = () => {
     return dispatch => {
         return axios({
             method:'get',
-            url:API_URL+'scrawler/categories'
+            url:API_URL+'scrapper/categories'
         })
         .then(response => {
             var data = []; 
@@ -40,7 +40,7 @@ export const getSubCategories = (id) => {
         }
         return axios({
             method:'get',
-            url:API_URL+'scrawler/categories/'+id
+            url:API_URL+'scrapper/categories/'+id
         })
         .then(response => {
             var data = []; 
@@ -67,7 +67,7 @@ export const getNotificationsSub = (id) => {
     return dispatch => {
         return axios({
             method:'get',
-            url:API_URL+'scrawler/notificationfromsub/'+id
+            url:API_URL+'scrapper/notificationfromsub/'+id
         })
         .then(response => {
             console.log(response);
@@ -95,7 +95,7 @@ export const getNotifications = (id) => {
     return dispatch => {
         return axios({
             method:'get',
-            url:API_URL+'scrawler/notification/'+id
+            url:API_URL+'scrapper/notification/'+id
         })
         .then(response => { 
             var data = []; 
@@ -122,7 +122,7 @@ export const getDetails = (id) => {
     return dispatch => {
         return axios({
             method:'get',
-            url:API_URL+'scrawler/details/'+id
+            url:API_URL+'scrapper/details/'+id
         })
         .then(response => { 
             let data = response.data;
@@ -145,7 +145,7 @@ export const getSubDetails = (id) => {
     return dispatch => {
         return axios({
             method:'get',
-            url:API_URL+'scrawler/detailsSub/'+id
+            url:API_URL+'scrapper/detailsSub/'+id
         })
         .then(response => { 
             let data = response.data; 

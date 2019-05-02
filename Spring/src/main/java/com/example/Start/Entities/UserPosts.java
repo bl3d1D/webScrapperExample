@@ -51,7 +51,6 @@ public class UserPosts {
     };
 
     public UserPosts(String username , String title, String description) {
-        this.id = id;
         this.username = username;
         this.title = title;
         this.description = description;

@@ -96,7 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .antMatchers("/api/user_notification/**").hasRole("USER")
                     .antMatchers("/api/userposts/**").permitAll()
-                    .antMatchers("/api/scrawler/**", "/api/user/checkEmailAvailability")
+                    .antMatchers("/api/scrapper/**", "/api/user/checkEmailAvailability")
                         .permitAll()
                     .antMatchers("/api/DBFetch/**")
                         .permitAll()
