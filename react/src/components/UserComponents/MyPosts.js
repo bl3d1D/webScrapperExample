@@ -79,13 +79,17 @@ class MyPosts extends Component{
         this.selectCategory = this.selectCategory.bind(this);
         this.onChange = this.onChange.bind(this);
         this.state = {
+            allCategories: [],
+            allSubcategories: [],
             category: '',
             subcategory: '',
             title: '',
             postdetails: '',
             visible : false,
             addPostVisible: false,
-            details : null
+            editPostVisible: false,
+            details : null,
+            visible: false
         }
     }
 
@@ -101,11 +105,47 @@ class MyPosts extends Component{
       this.props.deletePosts(id);
     }
 
-    openAddPost(){
+    openAddPost(){        
+        this.setState({ 
+            editPostVisible: false,
+            category: '',
+            subcategory: '',
+            title: '',
+            postdetails: '',
+        });
         this.props.getCategories();
+        this.props.getSubCategories(1);
         this.setState({ addPostVisible: true });
-        this.props.getSubCategories(0);
     }
+
+    openEditPost(e, row){
+        this.props.getCategories();
+        this.props.getSubCategories(row.category.index);
+        this.setState({ 
+            editPostVisible: true,
+            category: row.category.index,
+            subcategory: row.subcategory.scindex,
+            title: row.title,
+            postdetails: row.description,
+        });
+    }
+
+    openModal = (e, row) => {
+
+        this.setState({
+            visible: true,
+            details: row.description
+        });
+    }
+
+    closeModal = (e) => {
+      this.setState({ visible: false});
+    }
+
+    closeEditModal = (e) => {
+      this.setState({ editPostVisible: false});
+    }
+
 
     addPost(){
         let data = {
@@ -116,7 +156,6 @@ class MyPosts extends Component{
         }
 
         data = JSON.stringify(data);
-        console.log(data);
         this.props.savePost(data);
         //this.setState({ [event.target.name]: event.target.value });
     }
@@ -133,7 +172,6 @@ class MyPosts extends Component{
 
 
     render(){
-        console.log(this);
         const { classes } = this.props;
         let cat;
         if(typeof this.props.categories != 'undefined'){
@@ -143,7 +181,6 @@ class MyPosts extends Component{
         }
 
         let subcat;
-        console.log(this.props.subcategories);
         if(typeof this.props.subcategories != 'undefined' || this.props.subcategories.length != 0){
             subcat = this.props.subcategories.map((subcategory) => (
                 <option key={subcategory.scindex} value={subcategory.scindex}>{subcategory.title}</option>
@@ -152,10 +189,100 @@ class MyPosts extends Component{
             subcat = <MenuItem value=""><em>None</em></MenuItem>;
         }
 
+        console.log(cat);
+        console.log(subcat)
+
 
           return (
 
             <div>
+                <div id="message">
+                  <Dialog
+                      open={this.state.visible}
+                      keepMounted
+                      aria-labelledby="alert-dialog-slide-title"
+                      aria-describedby="alert-dialog-slide-description"
+                      >
+                      <DialogTitle id="alert-dialog-slide-title">
+                          {"Description"}
+                      </DialogTitle>
+                      <DialogContent>
+                          <div>
+                              <div dangerouslySetInnerHTML={{__html: this.state.details }} />
+                          </div>
+                      </DialogContent>
+                      <Button color="primary" autoFocus onClick={e => this.closeModal(e)}> 
+                          Close
+                      </Button>
+                  </Dialog>
+                </div>
+                <Dialog
+                  disableBackdropClick
+                  disableEscapeKeyDown
+                  open={this.state.editPostVisible}
+                  onClose={this.closeAddPost}
+                >
+                  <DialogTitle>Edit Post</DialogTitle>
+                  <DialogContent>
+                    <form className={classes.container}>
+                      <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="age-native-simple">Category</InputLabel>
+                        <Select
+                          native
+                          name="category"
+                          value={this.state.category}
+                          onChange={this.selectCategory}
+                          input={<Input id="age-native-simple" />}
+                        >
+                        {cat}
+                        </Select>
+                      </FormControl><br/>
+                      <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="age-native-simple">Subcategory</InputLabel>
+                        <Select
+                          native
+                          name="subcategory"
+                          value={this.state.subcategory}
+                          onChange={this.selectCategory}
+                          input={<Input id="age-native-simple" />}
+                        >
+                        {subcat}
+                        </Select>
+                        <TextField
+                          label="Title"
+                          placeholder="Title"
+                          fullWidth
+                          name="title"
+                          onChange={this.onChange}
+                          value={this.state.title}
+                          className={classes.textField}
+                          margin="normal"
+                          variant="outlined"
+                        />
+                        <TextField
+                          label="Description"
+                          placeholder="Description"
+                          fullWidth
+                          name="postdetails"
+                          onChange={this.onChange}
+                          value={this.state.postdetails}
+                          multiline
+                          className={classes.textField}
+                          margin="normal"
+                          variant="outlined"
+                        />
+                      </FormControl>
+                    </form>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.closeEditModal} color="primary">
+                      Cancel
+                    </Button>
+                    <Button onClick={this.editPost} color="primary">
+                      Ok
+                    </Button>
+                  </DialogActions>
+                </Dialog>
                 <h2>My Posts</h2>
                 <Dialog
                   disableBackdropClick
@@ -241,7 +368,7 @@ class MyPosts extends Component{
                                       <CustomTableCell component="th" scope="row" onClick={e => this.openModal(e, row)}>
                                         {row.title}
                                       </CustomTableCell>
-                                      <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><Icon>edit_icon</Icon></Fab></CustomTableCell>
+                                      <CustomTableCell align="right" onClick={e => this.openEditPost(e, row)}><Fab color="secondary" style={editButtonStyle}><Icon>edit_icon</Icon></Fab></CustomTableCell>
                                       <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><DeleteIcon onClick={() => this.deletePost(row.id)}/></Fab></CustomTableCell>
                                       <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><Icon>clear</Icon></Fab></CustomTableCell>
                                     </TableRow>
@@ -250,7 +377,7 @@ class MyPosts extends Component{
                                       <CustomTableCell component="th" scope="row" onClick={e => this.openModal(e, row)}>
                                         {row.title}
                                       </CustomTableCell>
-                                      <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><Icon>edit_icon</Icon></Fab></CustomTableCell>
+                                      <CustomTableCell align="right" onClick={e => this.openEditPost(e, row)}><Fab color="secondary" style={editButtonStyle}><Icon>edit_icon</Icon></Fab></CustomTableCell>
                                       <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><DeleteIcon onClick={() => this.deletePost(row.id)}/></Fab></CustomTableCell>
                                       <CustomTableCell align="right"><Fab color="secondary" style={editButtonStyle}><Icon>check_outlined</Icon></Fab></CustomTableCell>
                                     </TableRow>

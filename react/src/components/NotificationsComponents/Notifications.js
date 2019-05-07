@@ -58,7 +58,7 @@ class Notifications extends Component{
 
 const mapStateToProps = state => ({
     Notifications : state.CategoryData.Notifications,
-    loading : state.categories.NotificationLoading,
+    loading : state.CategoryData.NotificationLoading,
 });
 
 export default connect(mapStateToProps, {getNotifications})(Notifications);
