@@ -2,7 +2,6 @@ import {GET_CATEGORIES, DELETE_NOTIFICATION, GET_NOTIFICATION, CHECK, SAVE_NOTIF
 
 const initialState = {
     username: '',
-    authenticated: false,
     savedNotifications: [],
     notificationsLoading: true,
     postedNotifications: [],
@@ -14,12 +13,6 @@ const initialState = {
 
 export default function(state = initialState, action){
     switch(action.type) {
-        case CHECK :
-            console.log(action)
-            return {
-                ...state,
-                authenticated : action.authenticated,
-            }
         case SAVE_NOTIFICATION :
             return {
                 ...state,

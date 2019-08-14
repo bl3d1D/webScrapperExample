@@ -75,6 +75,7 @@ export const LogIn = (data) => {
                     success : true,
                     message : message,
                     error : false,
+                    authenticated : true,
                 })
                 setTimeout(() =>{
                     dispatch({
@@ -84,10 +85,6 @@ export const LogIn = (data) => {
                         error : false,
                     })
                 },3000)
-                dispatch({
-                    type: LOGIN,
-                    authenticated : true,
-                })
 
 
             })

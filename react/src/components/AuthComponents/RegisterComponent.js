@@ -23,7 +23,11 @@ const styles = theme => ({
       flexWrap: 'wrap',
     },
     margin: {
-      margin: theme.spacing.unit,
+      width: '100%',
+      display : 'inline-block',
+      marginTop : '10px',
+      position : 'relative',
+      left: 0
     },
     textField: {
       flexBasis: 200,
@@ -51,6 +55,8 @@ class RegisterComponent extends Component {
     }
 
     onChange(event){
+        console.log(event.target.name)
+        console.log(event.target.name)
         this.setState({ [event.target.name]: event.target.value });
     }
 
@@ -124,7 +130,7 @@ class RegisterComponent extends Component {
                                         name = "name"
                                         variant="outlined"
                                         onChange={this.onChange}
-                                        value = {this.state.username}
+                                        value = {this.state.name}
                                         InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -139,7 +145,7 @@ class RegisterComponent extends Component {
                                         name = "email"
                                         variant="outlined"
                                         onChange={this.onChange}
-                                        value = {this.state.username}
+                                        value = {this.state.email}
                                         InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">

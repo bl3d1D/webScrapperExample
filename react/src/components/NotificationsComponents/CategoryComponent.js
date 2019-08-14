@@ -47,7 +47,7 @@ class CategoryComponent extends Component{
         }else{
             console.log(cat)
         }
-        
+        console.log(cat)
         return(
             <div>
                 <h1> Kategorite </h1>

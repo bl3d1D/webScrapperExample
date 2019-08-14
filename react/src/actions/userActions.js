@@ -4,7 +4,6 @@ import { SAVE_NOTIFICATION, CREATE_NOTIFICATION, DELETE_NOTIFICATION, GET_NOTIFI
 
 var headers = {
     'Content-Type': 'application/json',
-    'Authorization': localStorage.getItem('token')
 }
 
 export const saveNotification = (data) => {

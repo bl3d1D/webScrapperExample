@@ -1,9 +1,10 @@
-import { REGISTER, LOGIN } from '../actions/types';
+import { REGISTER, LOGIN, CHECK } from '../actions/types';
 
 const initialState = {
     error : false,
     success : false,
     message : '',
+    authenticated: false,
 
 };
 
@@ -21,7 +22,13 @@ export default function(state = initialState, action){
                 ...state,
                 error : action.error,
                 success : action.success,
-                message : action.message
+                message : action.message,
+                authenticated: true,
+            }
+        case CHECK :
+            return {
+                ...state,
+                authenticated : action.authenticated,
             }
         default :
             return state

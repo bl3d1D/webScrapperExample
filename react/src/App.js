@@ -28,7 +28,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    logged : state.Userdata.authenticated,
+    logged : state.Authdata.authenticated,
 });
 
 export default withRouter(connect(mapStateToProps, {IsLoggedIn})(App));

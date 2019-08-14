@@ -8,6 +8,7 @@ import { Provider} from 'react-redux';
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import axios from "axios"
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -20,6 +21,13 @@ const store = createStore(
     initialState,
     composeEnhancers(applyMiddleware(thunk))
 );
+
+axios.interceptors.request.use(function (config) {
+	let token = localStorage.getItem("token")
+	config.headers.Authorization = token
+	return config
+})
+
 
 ReactDOM.render(
 <Provider store={store}>
