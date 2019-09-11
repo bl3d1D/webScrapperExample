@@ -1,0 +1,14 @@
+apiVersion: v1 # api version of kubernetes
+kind: Pod # what of object to deploy
+metadata: # data for object
+  name: database-pod
+  labels:
+    zone: prod
+    version: v1
+spec: # what is in the resource
+  containers: 
+    - name: mysql # name of the container
+      image: bledarsulmata/scrapper-database # path to image
+      imagePullPolicy: IfNotPresent
+      ports: # where will we expose the container
+      - containerPort: 3306

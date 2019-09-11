@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: database-service
+  labels:
+    app: database-pod
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+      nodePort: 30036 
+      protocol: TCP
+  selector:
+     app: DB

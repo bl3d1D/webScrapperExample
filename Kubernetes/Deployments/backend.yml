@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: BE	
+    spec:
+      containers:
+      - name: spring-pod
+        image: bledarsulmata/spring-scrapper-image
+        ports:
+        - containerPort: 8090
